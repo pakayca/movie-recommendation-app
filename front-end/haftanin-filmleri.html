@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <title>Haftanın Filmleri</title>
+  <link rel="stylesheet" href="haftanin-filmleri.css" />
+  <link rel="stylesheet" href="common.css" />
+</head>
+<body>
+<header>
+    <nav>
+      <ul class="nav-list">
+        <li class="nav-left"><a href="index.html">Ana Sayfa</a></li>
+        <li class="nav-right">
+          <ul class="nav-links" id="nav-links"> </ul>
+          <button class="menu-toggle" id="menu-toggle" aria-label="Menüyü aç/kapat">&#9776;</button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <h1>Haftanın Filmleri</h1>
+  
+  <main>
+    <div id="movieWrapper" class="movie-list-wrapper" aria-label="Haftanın filmleri listesi">
+      <div class="movie-list" id="movieList"></div>
+    </div>
+  </main>
+
+  <div id="note" style="text-align:center; font-size:0.85rem; color:#666; margin:1rem 0 0 0;">
+    * Son 7 günde en çok favorilenen filmlerden oluşturuldu
+  </div>
+
+  <div id="filmModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+    <div id="filmModalContent">
+      <span id="filmModalClose" role="button" aria-label="Kapat">&times;</span>
+      <iframe src="" allowfullscreen title="Film Fragmanı"></iframe>
+      <p id="filmComment" tabindex="0"></p>
+    </div>
+  </div>
+
+  <footer>© 2025 Ne İzlesem</footer>
+
+  <script src="haftanin-filmleri.js"></script>
+  <script src="./common.js"></script>
+
+</body>
+</html>

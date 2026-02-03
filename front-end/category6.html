@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <title>Hep Film Olmaz</title>
+  <link rel="stylesheet" href="category.css" />
+  <link rel="stylesheet" href="common.css" />
+</head>
+<body>
+<header>
+    <nav>
+      <ul class="nav-list">
+        <li class="nav-left"><a href="index.html">Ana Sayfa</a></li>
+        <li class="nav-right">
+          <ul class="nav-links" id="nav-links"> </ul>
+          <button class="menu-toggle" id="menu-toggle" aria-label="Menüyü aç/kapat">&#9776;</button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <h1>Hep Film OLmaz</h1>
+
+  <div id="filmContainer"></div>
+  <div id="filmModal" aria-hidden="true" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div id="filmModalContent">
+      <div id="filmModalClose" aria-label="Kapat" role="button" tabindex="0">&times;</div>
+      <iframe id="filmTrailer" src="" allowfullscreen title="Film Fragmanı"></iframe>
+      <p id="filmComment"></p>
+    </div>
+  </div>
+<script>
+  const filmContainer = document.getElementById('filmContainer');
+  const filmModal = document.getElementById('filmModal');
+  const filmModalClose = document.getElementById('filmModalClose');
+  const filmTrailer = document.getElementById('filmTrailer');
+  const filmComment = document.getElementById('filmComment');
+  const token = localStorage.getItem('token');
+
+  async function fetchAndRenderFilmsByCategory(category) {
+    try {
+      const res = await fetch('https://film-api-42zy.onrender.com/api/films');
+      if (!res.ok) throw new Error('Film yüklenemedi');
+
+      const groupedFilms = await res.json();
+      const films = groupedFilms[category] || [];
+
+      filmContainer.innerHTML = films.map(film => `
+  <div class="film-card" tabindex="0" role="article" aria-label="${film.title}" data-movieid="${film._id}">
+    <img src="${film.imageUrl}" alt="${film.title} afiş" />
+    ${token ? `
+      <button class="btn-fav" title="Favorilere ekle">🤍</button>
+      <button class="btn-watchlist" title="İzlenecekler"><span class="icon-plus">＋</span></button>
+    ` : ''}
+    <div class="movie-info">
+      <h3 class="movie-title">${film.title}</h3>
+      <p class="movie-description">${film.description || ''}</p>
+      <p class="movie-meta">Yıl: ${film.year || '-'} | IMDb: ${film.rating || '-'}</p>
+    </div>
+  </div>
+`).join('');
+
+setupFavoriteWatchlistButtons();
+attachMovieCardListeners();
+
+
+    } catch (e) {
+      console.error(e);
+      filmContainer.innerHTML = `<p>Film verileri yüklenemedi: ${e.message}</p>`;
+    }
+  }
+
+  function attachMovieCardListeners() {
+    document.querySelectorAll('.film-card').forEach(card => {
+      card.onclick = (e) => {
+        if (e.target.closest('.btn-fav') || e.target.closest('.btn-watchlist')) return;
+        const movieId = card.dataset.movieid;
+        fetch(`https://film-api-42zy.onrender.com/api/films/${movieId}`)
+          .then(res => {
+            if (!res.ok) throw new Error('Film bulunamadı');
+            return res.json();
+          })
+          .then(film => {
+            if (film.trailerUrl) {
+              openModal(film.trailerUrl, film.comment);
+            } else {
+              alert('Fragman bulunamadı.');
+            }
+          })
+          .catch(() => alert('Fragman bulunamadı.'));
+      };
+
+      const desc = card.querySelector('.movie-description');
+      card.addEventListener('mouseenter', () => {
+        desc.classList.add('expanded');
+      });
+      card.addEventListener('mouseleave', () => {
+        desc.classList.remove('expanded');
+      });
+    });
+  }
+
+  function openModal(trailerUrl, comment) {
+    filmTrailer.src = trailerUrl;
+    filmComment.textContent = comment || 'Yorum bulunmamaktadır.';
+    filmModal.classList.add('active');
+    filmModal.setAttribute('aria-hidden', 'false');
+    filmModalClose.focus();
+  }
+
+  function closeModal() {
+    filmModal.classList.remove('active');
+    filmModal.setAttribute('aria-hidden', 'true');
+    filmTrailer.src = '';
+  }
+
+  filmModalClose.addEventListener('click', closeModal);
+  filmModalClose.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      closeModal();
+    }
+  });
+
+  filmModal.addEventListener('click', e => {
+    if (e.target === filmModal) closeModal();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && filmModal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchAndRenderFilmsByCategory('hep film olmaz');
+  });
+
+</script>
+ <script src="./common.js"></script>
+
+  <footer> © 2025 Ne İzlesem </footer>
+
+</body>
+</html>

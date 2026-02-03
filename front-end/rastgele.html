@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <title>Rastgele Filmler</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="rastgele.css" />
+  <link rel="stylesheet" href="common.css" />
+</head>
+<body>
+<header>
+    <nav>
+      <ul class="nav-list">
+        <li class="nav-left"><a href="index.html">Ana Sayfa</a></li>
+        <li class="nav-right">
+          <ul class="nav-links" id="nav-links"> </ul>
+          <button class="menu-toggle" id="menu-toggle" aria-label="Menüyü aç/kapat">&#9776;</button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <h1 style="text-align:center; color: var(--accent); margin: 2rem 0 1rem;">🎲 Rastgele Filmler</h1>
+
+  <div id="filmContainer"></div>
+  
+  <div id="filmModal">
+    <div id="filmModalContent">
+      <span id="filmModalClose">&times;</span>
+      <iframe src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+      <p id="filmComment"></p>
+    </div>
+  </div>
+
+  <footer> © 2025 Ne İzlesem </footer>
+
+  <script src="rastgele.js"></script>
+  <script src="./common.js"></script>
+
+</body>
+</html>

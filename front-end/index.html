@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <title>Ne İzlesem</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="common.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Playfair+Display&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+  <nav class="navbar">
+    <div class="navbar-left">
+      <form id="searchForm" class="search-form" role="search" aria-label="Film arama formu">
+        <input
+          type="text"
+          name="q"
+          placeholder="Film, dizi ara..."
+          autocomplete="off"
+          aria-label="Arama kutusu"
+          required
+        />
+        <button type="submit" aria-label="Ara" title="Ara" class="search-button">
+          🔍
+        </button>
+      </form>
+    </div>
+    <div class="navbar-right">
+      <ul class="nav-links" id="nav-links"></ul>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Menüyü aç/kapat">&#9776;</button>
+    </div>
+  </nav>
+</header>
+
+  <main>
+    <section id="hakkinda" class="about">
+      <div class="about-container">
+        <h1 class="tagline">
+  Her <span class="highlight">anın</span> bir filmi vardır, <br />
+  senin <span class="highlight">anın</span> hangisi?
+</h1>
+
+        <p class="subtitle"> Moduna göre seçilmiş, zamanına göre kusursuz filmler burada! </p>
+        <div class="about-actions">
+          <a href="moduna-gore.html" class="mod-button">🎭 Moduna Göre Seç</a>
+          <a href="rastgele.html" class="rast-button">🎲 Rastgele</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="movie-section">
+      <h2><a href="category1.html" style="color: inherit; text-decoration: none;"> 🌟 Popüler Filmler</a></h2>
+      <button class="btn-arrow btn-left" data-target="populerMovieWrapper" aria-label="Önceki filmler">&#8592;</button>
+      <div class="movie-list-wrapper" id="populerMovieWrapper" tabindex="0" aria-label="Popüler filmler listesi"></div>
+      <button class="btn-arrow btn-right" data-target="populerMovieWrapper" aria-label="Sonraki filmler">&#8594;</button>
+    </section>
+
+    <section class="movie-section">
+      <h2><a href="category2.html" style="color: inherit; text-decoration: none;"> 💎 Kesin İzle</a></h2>
+      <button class="btn-arrow btn-left" data-target="kesinIzleMovieWrapper" aria-label="Önceki filmler">&#8592;</button>
+      <div class="movie-list-wrapper" id="kesinIzleMovieWrapper" tabindex="0" aria-label="Kesin izle filmler listesi"></div>
+      <button class="btn-arrow btn-right" data-target="kesinIzleMovieWrapper" aria-label="Sonraki filmler">&#8594;</button>
+    </section>
+
+    <section class="movie-section">
+      <h2><a href="category3.html" style="color: inherit; text-decoration: none;"> 🍿 Can Sıkıntısında Akar</a></h2>
+      <button class="btn-arrow btn-left" data-target="canSikintisiMovieWrapper" aria-label="Önceki filmler">&#8592;</button>
+      <div class="movie-list-wrapper" id="canSikintisiMovieWrapper" tabindex="0" aria-label="Can sıkıntısında akar filmler listesi"></div>
+      <button class="btn-arrow btn-right" data-target="canSikintisiMovieWrapper" aria-label="Sonraki filmler">&#8594;</button>
+    </section>
+
+    <section class="movie-section">
+      <h2><a href="category4.html" style="color: inherit; text-decoration: none;"> 🍹 Boş Zaman Eğlencesi</a></h2>
+      <button class="btn-arrow btn-left" data-target="bosZamanEglencesiMovieWrapper" aria-label="Önceki filmler">&#8592;</button>
+      <div class="movie-list-wrapper" id="bosZamanEglencesiMovieWrapper" tabindex="0" aria-label="Boş zaman eğlencesi filmler listesi"></div>
+      <button class="btn-arrow btn-right" data-target="bosZamanEglencesiMovieWrapper" aria-label="Sonraki filmler">&#8594;</button>
+    </section>
+
+    <section class="movie-section">
+      <h2><a href="category5.html" style="color: inherit; text-decoration: none;"> ⚠️ Bence Yaklaşma</a></h2>
+      <button class="btn-arrow btn-left" data-target="benceYakismazMovieWrapper" aria-label="Önceki filmler">&#8592;</button>
+      <div class="movie-list-wrapper" id="benceYakismazMovieWrapper" tabindex="0" aria-label="Bence yaklaşma filmler listesi"></div>
+      <button class="btn-arrow btn-right" data-target="benceYakismazMovieWrapper" aria-label="Sonraki filmler">&#8594;</button>
+    </section>
+
+    <section class="movie-section">
+      <h2><a href="category6.html" style="color: inherit; text-decoration: none;">  🎥 Hep Film OLmaz</a></h2>
+      <button class="btn-arrow btn-left" data-target="hepFilmOLmazMovieWrapper" aria-label="Önceki filmler">&#8592;</button>
+      <div class="movie-list-wrapper" id="hepFilmOLmazMovieWrapper" tabindex="0" aria-label="Hep Film OLmaz listesi"></div>
+      <button class="btn-arrow btn-right" data-target="hepFilmOLmazMovieWrapper" aria-label="Sonraki filmler">&#8594;</button>
+    </section>
+
+  </main>
+
+  <footer> © 2025 Ne İzlesem </footer>
+
+<div id="filmModal" aria-hidden="true" class="modal">
+  <div id="filmModalContent" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div id="filmModalClose" aria-label="Kapat">&times;</div>
+    <iframe id="filmTrailer" src="" allowfullscreen title="Film Fragmanı"></iframe>
+    <p id="filmComment"></p>
+  </div>
+</div>
+
+<div id="searchModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-content">
+    <button id="modalCloseBtn" class="modal-close" aria-label="Kapat">&times;</button>
+    <div class="modal-body">
+      <div class="modal-left">
+        <img id="modalPoster" src="" alt="Film afişi" />
+        <p id="modalDescription">Açıklama buraya gelecek.</p>
+      </div>
+      <div class="modal-right">
+        <iframe id="modalTrailer" src="" frameborder="0" allowfullscreen title="Fragman"></iframe>
+        <p id="modalComment">Yorum buraya gelecek.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+  <script src="script.js"></script>
+  <script src="./common.js"></script>
+
+</body>
+</html>

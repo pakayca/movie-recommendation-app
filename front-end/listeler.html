@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <title>Listelerim</title>
+  <style>
+  :root {
+  --bg: #F9FAFB;
+  --text: #1F2937;
+  --accent: #8B1E3F;
+  --accent-dark: #66112E;
+  --nav-bg: #ffffff;
+  --nav-text: #8B1E3F;
+  --white: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0 16px;
+}
+
+h1 {
+  text-align: center;
+  color: var(--accent);
+  margin: 30px 0 20px;
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+}
+
+.list-section {
+  margin-bottom: 40px;
+  background: var(--white);
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.list-section h2 {
+  color: var(--accent);
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+  position: relative;
+  padding-left: 10px;
+  border-left: 4px solid var(--accent);
+}
+
+.films-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.film-card {
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px var(--shadow);
+  width: 190px;
+  padding: 10px;
+  position: relative;
+  text-align: center;
+  color: var(--text);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.film-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(139, 30, 63, 0.25);
+}
+
+.film-card img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  height: 270px;
+  border: 2px solid var(--accent);
+  transition: transform 0.3s ease;
+}
+
+.film-card:hover img {
+  transform: scale(1.05);
+}
+
+.film-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--accent);
+  margin-top: 10px;
+  white-space: normal;
+  max-height: 3.2em;
+  line-height: 1.6em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.film-meta {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 6px;
+  text-align: center;
+  font-weight: 400;
+}
+
+.film-meta span {
+  font-style: normal;
+  font-weight: 400;
+}
+
+button.remove-btn {
+  margin-top: 12px;
+  padding: 8px 14px;
+  background-color: var(--accent);
+  color: var(--white);
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 10px rgba(139, 30, 63, 0.5);
+  transition: all 0.3s ease;
+}
+
+button.remove-btn:hover {
+  background-color: var(--accent-dark);
+  transform: scale(1.05);
+}
+
+#message {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+
+footer {
+  position: relative;
+  text-align: center;
+  color: #666;
+  background-color: #fff;
+  margin-top: 3rem;
+  padding: 2rem 0;
+  font-size: 0.9rem;
+  border-top: 1px solid #ddd;
+  z-index: 1;
+  overflow: hidden;
+}
+
+footer::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: rgba(139, 30, 63, 0.05);
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+@media (max-width: 1000px) {
+  .films-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 3px;
+  }
+
+  .film-card {
+    width: 140px;
+    padding: 6px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .film-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .film-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 6px 0 2px;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .film-meta {
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+
+  .remove-btn {
+    font-size: 12px;
+    padding: 4px 6px;
+  }
+}
+
+
+</style>
+</head>
+<body>
+
+<h1>Listelerim</h1>
+<div id="message"></div>
+
+<section class="list-section">
+  <h2><span style="margin-right:8px;">❤️</span>Favoriler</h2>
+  <div id="favoritesList" class="films-container"></div>
+</section>
+
+<section class="list-section">
+  <h2><span style="margin-right:8px;">📺</span>İzlenecekler</h2>
+  <div id="watchlist" class="films-container"></div>
+</section>
+
+<script>
+const API_BASE = 'https://film-api-42zy.onrender.com/api';
+const token = localStorage.getItem('token');
+const messageDiv = document.getElementById('message');
+const favoritesList = document.getElementById('favoritesList');
+const watchlist = document.getElementById('watchlist');
+
+if (!token) {
+  messageDiv.textContent = 'Lütfen önce giriş yapınız.';
+  favoritesList.innerHTML = '<p>Favorileri görmek için giriş yapmalısınız.</p>';
+  watchlist.innerHTML = '<p>İzlenecekleri görmek için giriş yapmalısınız.</p>';
+} else {
+  messageDiv.textContent = '';
+
+  async function fetchAuth(url, options = {}) {
+    options.headers = options.headers || {};
+    options.headers['Authorization'] = 'Bearer ' + token;
+
+    if (!options.method || options.method.toUpperCase() !== 'GET') {
+      options.headers['Content-Type'] = 'application/json';
+    }
+
+    const res = await fetch(url, options);
+    if (!res.ok) throw new Error('API hatası: ' + res.status);
+    return res.json();
+  }
+
+  function createFilmCard(film, type, entryId) {
+    const card = document.createElement('div');
+    card.className = 'film-card';
+
+    const img = document.createElement('img');
+    img.src = film.imageUrl || 'https://via.placeholder.com/180x270?text=No+Image';
+    img.alt = film.title;
+    card.appendChild(img);
+
+    const title = document.createElement('div');
+    title.className = 'film-title';
+    title.textContent = film.title;
+    card.appendChild(title);
+
+    const meta = document.createElement('div');
+    meta.className = 'film-meta';
+
+    const year = film.year ? `Yıl: ${film.year}` : '';
+    const imdb = film.rating ? `IMDb: ${film.rating}` : '';
+
+    meta.textContent = [year, imdb].filter(Boolean).join(' | ');
+    card.appendChild(meta);
+
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'remove-btn';
+    removeBtn.textContent = 'Listeden Çıkar';
+    removeBtn.onclick = async () => {
+      if (confirm('Bu filmi listeden çıkarmak istediğinizden emin misiniz?')) {
+        await removeFromList(entryId, type);
+      }
+    };
+    card.appendChild(removeBtn);
+
+    return card;
+  }
+
+  async function loadFavorites() {
+    favoritesList.innerHTML = '';
+    try {
+      const favs = await fetchAuth(API_BASE + '/favorite/list');
+      if (favs.length === 0) {
+        favoritesList.innerHTML = '<p>Favori filminiz yok.</p>';
+        return;
+      }
+      for (const item of favs) {
+        const card = createFilmCard(item.movieId, 'favorite', item._id);
+        favoritesList.appendChild(card);
+      }
+    } catch (e) {
+      favoritesList.innerHTML = '<p>Favoriler yüklenirken hata oluştu.</p>';
+      console.error(e);
+    }
+  }
+
+  async function loadWatchlist() {
+    watchlist.innerHTML = '';
+    try {
+      const list = await fetchAuth(API_BASE + '/list/list');
+      if (list.length === 0) {
+        watchlist.innerHTML = '<p>İzlenecek film listeniz boş.</p>';
+        return;
+      }
+      for (const item of list) {
+        const card = createFilmCard(item.movieId, 'watchlist', item._id);
+        watchlist.appendChild(card);
+      }
+    } catch (e) {
+      watchlist.innerHTML = '<p>İzlenecekler yüklenirken hata oluştu.</p>';
+      console.error(e);
+    }
+  }
+
+
+  async function removeFromList(entryId, type) {
+    try {
+      const url = type === 'favorite'
+        ? `${API_BASE}/favorite/remove/${entryId}`
+        : `${API_BASE}/list/remove/${entryId}`;
+
+      const res = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Silme başarısız');
+      }
+
+      if (type === 'favorite') {
+        await loadFavorites();
+      } else {
+        await loadWatchlist();
+      }
+    } catch (err) {
+      console.error('Listeden çıkarma hatası:', err);
+      alert('Listeden çıkarılamadı: ' + err.message);
+    }
+  }
+
+  loadFavorites();
+  loadWatchlist();
+}  
+</script>
+
+<footer> © 2025 Ne İzlesem </footer>
+
+</body>
+</html>

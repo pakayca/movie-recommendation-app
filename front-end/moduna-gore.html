@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Moduna Göre</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Playfair+Display:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="moduna-gore.css" />
+  <link rel="stylesheet" href="common.css" />
+</head>
+<body>
+<header> 
+  <nav> 
+    <ul class="nav-list"> 
+      <li class="nav-left"><a href="index.html">Ana Sayfa</a></li> 
+      <li class="nav-right"> <ul class="nav-links" id="nav-links"> </ul> 
+        <button class="menu-toggle" id="menu-toggle" aria-label="Menüyü aç/kapat">&#9776;</button> </li> 
+      </ul> 
+    </nav> 
+  </header>
+
+  <section class="scene-header">
+    <img src="image2.jpg" alt="İkonik Film Sahnesi" />
+    <h1>Bugün hangi duygunla buluşacaksın?</h1>
+    <p class="motto">Duygularını kontrol etme modu yok, filmin moduna gir!</p>
+  </section>
+
+  <div id="categoriesContainer"></div>
+
+  <div id="filmModal" aria-hidden="true">
+    <div id="filmModalContent" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <span id="filmModalClose" aria-label="Kapat">&times;</span>
+      <iframe src="" allowfullscreen allow="autoplay; encrypted-media" title="Film Fragmanı"></iframe>
+      <p id="filmComment"></p>
+    </div>
+  </div>
+
+  <footer> © 2025 Ne İzlesem </footer>
+  
+  <script src="moduna-gore.js"></script>
+   <script src="./common.js"></script>
+</body>
+</html>
